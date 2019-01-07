@@ -9,4 +9,6 @@
 <logger name="jdbc.resultest" level="ERROR"></logger>
 <logger name="jdbc.resultesttable" level="ERROR"></logger>
 <logger name="jdbc.connection" level="INFO"></logger>
+
+
 </configuration>

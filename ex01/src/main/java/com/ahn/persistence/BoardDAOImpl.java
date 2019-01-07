@@ -11,7 +11,7 @@ import com.ahn.domain.BoardVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
-
+	
 	@Inject
 	private SqlSession session;
 	
@@ -19,17 +19,17 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	@Override
 	public void create(BoardVO vo) throws Exception{
-		session.insert(namespace +".create", vo);
+		session.insert(namespace+".create", vo);
 	}
 	
 	@Override
 	public BoardVO read(Integer bno) throws Exception{
-		return session.selectOne(namespace+".read", bno);
+		return session.selectOne(namespace +".read", bno);
 	}
-	
+
 	@Override
-	public void update(BoardVO vo) throws Exception{
-		session.update(namespace+ ".update", vo);
+	public void update(BoardVO vo)throws Exception{
+		session.update(namespace+".update", vo);
 	}
 	
 	@Override
@@ -38,7 +38,7 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 	
 	@Override
-	public List<BoardVO> listAll() throws Exception{
+	public List<BoardVO> listAll()throws Exception{
 		return session.selectList(namespace+".listAll");
 	}
 }
