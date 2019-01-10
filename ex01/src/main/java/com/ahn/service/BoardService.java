@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.ahn.domain.BoardVO;
+import com.ahn.domain.Criteria;
 
 
 public interface BoardService {
@@ -18,4 +19,8 @@ public interface BoardService {
 	public void remove(Integer bno)throws Exception;
 	
 	public List<BoardVO> listAll()throws Exception;
+	
+	public List<BoardVO> listCriteria(Criteria cri)throws Exception;
+	
+	public int listCountCriteria(Criteria cri)throws Exception;
 }

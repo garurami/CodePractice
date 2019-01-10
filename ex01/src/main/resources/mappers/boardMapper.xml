@@ -3,36 +3,71 @@
 
 <mapper namespace="com.ahn.mapper.BoardMapper">
 
-<insert id="create">
-insert into tbl_board (title, content, writer) 
-values(#{title},#{content},#{writer})
-</insert>
+	<insert id="create">
+		insert into tbl_board (title, content, writer)
+		values(#{title},#{content},#{writer})
+	</insert>
 
-<select id="read" resultType="com.ahn.domain.BoardVO">
-select
-	bno, title, content, writer, regdate, viewcnt
-from
-	tbl_board
-where bno = #{bno}
-</select>
+	<select id="read" resultType="com.ahn.domain.BoardVO">
+		select
+		bno, title, content, writer, regdate, viewcnt
+		from
+		tbl_board
+		where bno = #{bno}
+	</select>
 
-<update id="update">
-update tbl_board set title=#{title}, content=#{content}
-where bno = #{bno}
-</update>
+	<update id="update">
+		update tbl_board set title=#{title}, content=#{content}
+		where bno = #{bno}
+	</update>
 
-<delete id="delete">
-delete from tbl_board where bno = #{bno}
-</delete>
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
 
-<select id="listAll" resultType="com.ahn.domain.BoardVO">
-<![CDATA[
-select
-	bno, title, content, writer, regdate, viewcnt
-from
-	tbl_board
-where bno > 0
-order by bno desc, regdate desc
-]]>
-</select>
+	<select id="listAll" resultType="com.ahn.domain.BoardVO">
+	<![CDATA[
+	select
+		bno, title, content, writer, regdate, viewcnt
+	from
+		tbl_board
+	where bno > 0
+	order by bno desc, regdate desc
+	]]>
+	</select>
+
+	<select id="listPage" resultType="BoardVO">
+	<![CDATA[
+	select
+		bno, title, content, writer,regdate, viewcnt
+	from
+		tbl_board
+	where bno>0
+	order by bno desc, regdate desc
+	limit #{page}, 10
+	]]>
+	</select>
+	
+	<select id="listCriteria" resultType="BoardVO">
+	<![CDATA[
+	select
+		bno, title, content, writer, regdate, viewcnt
+	from
+		tbl_board
+	where bno>0
+	order by bno desc, regdate desc
+	limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>
+	
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+	select
+		count(bno)
+	from
+		tbl_board
+	where
+		bno>0
+	]]>
+	</select>
 </mapper>
