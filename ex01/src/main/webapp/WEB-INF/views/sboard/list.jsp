@@ -17,16 +17,17 @@ $(document).ready(
 			$('#searchBtn').on(
 					"click", function(event){
 						self.location="list"
-						+ '${pageMaker.makeQuery(1)}''
+						+ '${pageMaker.makeQuery(1)}'
 						+"&searchType="
 						+$("select option:selected").val()
 						+"&keyword=" + encodURIComponent($('#keywordInput').val());
 					});
-			
 			$('#newBtn').on("click", function(evt){
-				self.location="register";
-			});
+				
+					self.location="register";
+				});
 		});
+
 </script>
 </head>
 <body>
@@ -47,9 +48,9 @@ $(document).ready(
 <input type="text" name='keyword' id="keywordInput" value='${cri.keyword}'>
 
 	<button id='searchBtn'>Search</button>
-	<button id='newBtn'>New Board</button>	
+	
 </form>
-
+<button id='newBtn'>New Board</button>
 </div>
 
 	<table class="table table-bordered">
@@ -64,8 +65,8 @@ $(document).ready(
 		<c:forEach items="${list }" var="boardVO">
 			<tr>
 				<td>${boardVO.bno}</td>
-				<td><a href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page)}&bno=${boardVO.bno }'>${boardVO.title }</a></td>
-				<td>${boardVO.writer }</td>
+				<td><a href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page)}&bno=${boardVO.bno}'>${boardVO.title }</a></td>
+				<td>${boardVO.writer}</td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 						value="${ boardVO.regdate}"></fmt:formatDate></td>
 				<td><span class="badge bg-red">${boardVO.viewcnt} </span></td>

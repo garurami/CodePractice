@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.ahn.domain.BoardVO;
 import com.ahn.domain.Criteria;
+import com.ahn.domain.SearchCriteria;
 
 
 public interface BoardService {
@@ -23,4 +24,10 @@ public interface BoardService {
 	public List<BoardVO> listCriteria(Criteria cri)throws Exception;
 	
 	public int listCountCriteria(Criteria cri)throws Exception;
+	
+	public List<BoardVO> listSearchCriteria(SearchCriteria cri)throws Exception;
+	
+	public int listSearchCount(SearchCriteria cri)throws Exception;
+	
+	
 }

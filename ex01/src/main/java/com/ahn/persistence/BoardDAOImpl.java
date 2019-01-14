@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.ahn.domain.BoardVO;
 import com.ahn.domain.Criteria;
+import com.ahn.domain.SearchCriteria;
+
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
 	
+	//sql문을 연결하는 객체
 	@Inject
 	private SqlSession session;
 	
@@ -62,5 +65,15 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public int countPaging(Criteria cri) throws Exception{
 		return session.selectOne(namespace+".countPaging",cri);
+	}
+	
+	@Override
+	public List<BoardVO> listSearch(SearchCriteria cri)throws Exception{
+		return session.selectList(namespace + ".listSearch", cri);
+	}
+	
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception{
+		return session.selectOne(namespace + ".listSearchCount", cri);
 	}
 }

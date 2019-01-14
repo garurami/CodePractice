@@ -10,14 +10,16 @@
 
 	<select id="read" resultType="com.ahn.domain.BoardVO">
 		select
-		bno, title, content, writer, regdate, viewcnt
+		bno, title, content, writer,
+		regdate, viewcnt
 		from
 		tbl_board
 		where bno = #{bno}
 	</select>
 
 	<update id="update">
-		update tbl_board set title=#{title}, content=#{content}
+		update tbl_board set title=#{title},
+		content=#{content}
 		where bno = #{bno}
 	</update>
 
@@ -47,7 +49,7 @@
 	limit #{page}, 10
 	]]>
 	</select>
-	
+
 	<select id="listCriteria" resultType="BoardVO">
 	<![CDATA[
 	select
@@ -59,7 +61,7 @@
 	limit #{pageStart}, #{perPageNum}
 	]]>
 	</select>
-	
+
 	<select id="countPaging" resultType="int">
 	<![CDATA[
 	select
@@ -69,5 +71,54 @@
 	where
 		bno>0
 	]]>
+	</select>
+
+	<select id="listSearch" resultType="BoardVO">
+	<![CDATA[
+	select *
+	from tbl_board
+	where bno>0
+	]]>
+
+		<include refid="search"></include>
+	
+	<![CDATA[
+	order by bno desc
+	limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and title like CONCAT('%', #{keyword},'%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and title like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				and title like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				and title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',
+				#{keyword},'%'))
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				and title like CONCAT('%',#{keyword},'%') OR writer like CONCAT('%',
+				#{keyword},'%'))
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				and title like CONCAT('%',#{keyword},'%')
+				OR content like CONCAT('%', #{keyword},'%')
+				OR writer like CONCAT('%',#{keyword},'%')
+			</if>
+		</if>
+	</sql>
+	<select id="listSearchCount" resultType="int">
+	<![CDATA[
+	select count(bno)
+	from tbl_board
+	where bno > 0
+	]]>
+	<include refid="search"></include>
 	</select>
 </mapper>
