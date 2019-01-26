@@ -7,15 +7,24 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class PageMaker {
-	
+
 	private int totalCount;
 	private int startPage;
 	private int endPage;
 	private boolean prev;
 	private boolean next;
-	private int displayPageNum=10;
+	
+	private int displayPageNum = 10;
+	
 	private Criteria cri;
 	
+	public String makeQuery(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("perPageNum", cri.getPerPageNum())
+				.build();
+		return uriComponents.toUriString();
+	}
 	
 	public void setCri(Criteria cri) {
 		this.cri = cri;
@@ -28,38 +37,27 @@ public class PageMaker {
 	}
 	
 	private void calcData() {
-		endPage=(int) (Math.ceil(cri.getPage()/(double) displayPageNum)*displayPageNum);
+		endPage = (int) (Math.ceil(cri.getPage()/(double) displayPageNum)*displayPageNum);
 		
-		startPage=(endPage - displayPageNum) + 1;
+		startPage = (endPage - displayPageNum) +1;
 		
-		int tempEndPage = (int) (Math.ceil(totalCount/(double)cri.getPerPageNum()));
+		int tempEndPage = (int) (Math.ceil(totalCount/(double) cri.getPerPageNum()));
 		
 		if(endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}
 		
-		prev = startPage == 1 ? false : true;
+		prev = startPage == 1 ? false : true ; 
 		
-		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
-	}
-	
-	public String makeQuery(int page) {
-		UriComponents uriComponents = 
-				UriComponentsBuilder.newInstance()
-				.queryParam("page", page)
-				.queryParam("perPageNum", cri.getPerPageNum())
-				.build();
-		
-		return uriComponents.toUriString();
+		next = endPage*cri.getPerPageNum() >= totalCount ? false : true ;
 	}
 
 	public String makeSearch(int page) {
-		
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
-				.queryParam("page", page)
+				.queryParam("page",page)
 				.queryParam("perPageNum", cri.getPerPageNum())
 				.queryParam("searchType", ((SearchCriteria) cri).getSearchType())
-				.queryParam("keyword", encoding(((SearchCriteria)cri).getKeyword())).build();
+				.queryParam("keyword", encoding(((SearchCriteria) cri).getKeyword())).build();
 		
 		return uriComponents.toUriString();
 	}
@@ -69,11 +67,15 @@ public class PageMaker {
 			return "";
 		}
 		try {
-			return URLEncoder.encode(keyword,"UTF-8");
+			return URLEncoder.encode(keyword, "UTF-8");
 		}catch(UnsupportedEncodingException e) {
 			return "";
 		}
 	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+
 	public int getStartPage() {
 		return startPage;
 	}
@@ -114,13 +116,9 @@ public class PageMaker {
 		this.displayPageNum = displayPageNum;
 	}
 
-	public int getTotalCount() {
-		return totalCount;
-	}
-
 	public Criteria getCri() {
 		return cri;
 	}
-	
+
 	
 }

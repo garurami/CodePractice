@@ -4,11 +4,11 @@
 <mapper namespace="com.ahn.mapper.BoardMapper">
 
 	<insert id="create">
-		insert into tbl_board (title, content, writer)
+		insert into tbl_board(title, content, writer)
 		values(#{title},#{content},#{writer})
 	</insert>
 
-	<select id="read" resultType="com.ahn.domain.BoardVO">
+	<select id="read" resultType="BoardVO">
 		select
 		bno, title, content, writer,
 		regdate, viewcnt
@@ -18,8 +18,8 @@
 	</select>
 
 	<update id="update">
-		update tbl_board set title=#{title},
-		content=#{content}
+		update tbl_board set title =#{title}, content =
+		#{content}
 		where bno = #{bno}
 	</update>
 
@@ -27,36 +27,35 @@
 		delete from tbl_board where bno = #{bno}
 	</delete>
 
-	<select id="listAll" resultType="com.ahn.domain.BoardVO">
-	<![CDATA[
-	select
-		bno, title, content, writer, regdate, viewcnt
-	from
-		tbl_board
-	where bno > 0
-	order by bno desc, regdate desc
-	]]>
+	<select id="listAll" resultType="BoardVO">
+<![CDATA[
+select
+	bno, title, content, writer, regdate, viewcnt
+from
+	tbl_board
+where bno > 0
+order by bno desc, regdate desc
+]]>
 	</select>
 
 	<select id="listPage" resultType="BoardVO">
-	<![CDATA[
-	select
-		bno, title, content, writer,regdate, viewcnt
-	from
-		tbl_board
-	where bno>0
-	order by bno desc, regdate desc
-	limit #{page}, 10
-	]]>
+<![CDATA[
+select
+	bno, title, content, writer, regdate, viewcnt
+from
+	tbl_board
+where bno > 0
+order by bno desc, regdate desc
+limit #{page}, 10
+]]>
 	</select>
-
 	<select id="listCriteria" resultType="BoardVO">
 	<![CDATA[
 	select
 		bno, title, content, writer, regdate, viewcnt
 	from
 		tbl_board
-	where bno>0
+	where bno > 0
 	order by bno desc, regdate desc
 	limit #{pageStart}, #{perPageNum}
 	]]>
@@ -74,18 +73,25 @@
 	</select>
 
 	<select id="listSearch" resultType="BoardVO">
-	<![CDATA[
-	select *
-	from tbl_board
-	where bno>0
-	]]>
+<![CDATA[
+select *
+from tbl_board
+where bno > 0
+]]>
 
-		<include refid="search"></include>
-	
-	<![CDATA[
-	order by bno desc
-	limit #{pageStart}, #{perPageNum}
-	]]>
+<include refid = "search"></include>
+<![CDATA[
+order by bno desc
+limit #{pageStart}, #{perPageNum}
+]]>
+	</select>
+	<select id="listSearchCount" resultType="int">
+<![CDATA[
+select count(bno)
+from tbl_board
+where bno > 0
+]]>
+<include refid="search"></include>
 	</select>
 	<sql id="search">
 		<if test="searchType != null">
@@ -93,32 +99,23 @@
 				and title like CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="searchType == 'c'.toString()">
-				and title like CONCAT('%',#{keyword},'%')
+				and content like CONCAT('%',#{keyword}, '%')
 			</if>
 			<if test="searchType == 'w'.toString()">
-				and title like CONCAT('%',#{keyword},'%')
+				and writer like CONCAT('%',#{keyword}, '%')
 			</if>
 			<if test="searchType == 'tc'.toString()">
-				and title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',
-				#{keyword},'%'))
+				and (title like CONCAT('%', #{keyword},'%') OR content like
+				CONCAT('%',#{keyword},'%'))
 			</if>
 			<if test="searchType == 'cw'.toString()">
-				and title like CONCAT('%',#{keyword},'%') OR writer like CONCAT('%',
-				#{keyword},'%'))
+				and (content like CONCAT('%', #{keyword},'%') OR writer like
+				CONCAT('%',#{keyword},'%'))
 			</if>
-			<if test="searchType == 'cw'.toString()">
-				and title like CONCAT('%',#{keyword},'%')
-				OR content like CONCAT('%', #{keyword},'%')
-				OR writer like CONCAT('%',#{keyword},'%')
+			<if test="searchType == 'tcw'.toString()">
+				and (title like CONCAT('%', #{keyword},'%') OR content like
+				CONCAT('%',#{keyword},'%')OR writer like CONCAT('%',#{keyword},'%'))
 			</if>
 		</if>
 	</sql>
-	<select id="listSearchCount" resultType="int">
-	<![CDATA[
-	select count(bno)
-	from tbl_board
-	where bno > 0
-	]]>
-	<include refid="search"></include>
-	</select>
 </mapper>

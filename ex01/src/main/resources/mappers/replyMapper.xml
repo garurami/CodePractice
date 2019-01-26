@@ -12,7 +12,7 @@
 	</select>
 	
 	<insert id="create">
-	insert into tbl_reply(bno,replytext, replyer)
+	insert into tbl_reply(bno, replytext, replyer)
 	values(#{bno},#{replytext},#{replyer})
 	</insert>
 	

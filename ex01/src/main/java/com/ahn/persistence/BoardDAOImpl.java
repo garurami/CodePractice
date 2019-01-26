@@ -11,33 +11,32 @@ import com.ahn.domain.BoardVO;
 import com.ahn.domain.Criteria;
 import com.ahn.domain.SearchCriteria;
 
-
 @Repository
 public class BoardDAOImpl implements BoardDAO{
 	
-	//sql문을 연결하는 객체
 	@Inject
 	private SqlSession session;
 	
-	private static String namespace="com.ahn.mapper.BoardMapper";
+	private static String namespace = "com.ahn.mapper.BoardMapper";
+
 	
 	@Override
 	public void create(BoardVO vo) throws Exception{
-		session.insert(namespace+".create", vo);
+		session.insert(namespace + ".create", vo);
 	}
 	
 	@Override
 	public BoardVO read(Integer bno) throws Exception{
-		return session.selectOne(namespace +".read", bno);
+		return session.selectOne(namespace+".read", bno);
 	}
-
+	
 	@Override
 	public void update(BoardVO vo)throws Exception{
 		session.update(namespace+".update", vo);
 	}
 	
 	@Override
-	public void delete(Integer bno) throws Exception{
+	public void delete(Integer bno)throws Exception{
 		session.delete(namespace+".delete", bno);
 	}
 	
@@ -48,32 +47,32 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	@Override
 	public List<BoardVO> listPage(int page) throws Exception{
-		
 		if(page <= 0) {
-			page=1;
+			page = 1;
 		}
 		
-		page = (page -1) * 10;
-				return session.selectList(namespace+".listPage", page);
+		page=(page - 1) *10;
+		return session.selectList(namespace+".listPage", page);
 	}
 	
 	@Override
-	public List<BoardVO> listCriteria(Criteria cri)throws Exception{
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception{
 		return session.selectList(namespace+".listCriteria", cri);
 	}
 	
 	@Override
-	public int countPaging(Criteria cri) throws Exception{
-		return session.selectOne(namespace+".countPaging",cri);
+	public int countPaging(Criteria cri)throws Exception{
+		return session.selectOne(namespace+".countPaging", cri);
 	}
 	
 	@Override
 	public List<BoardVO> listSearch(SearchCriteria cri)throws Exception{
-		return session.selectList(namespace + ".listSearch", cri);
+		return session.selectList(namespace+".listSearch", cri);
 	}
 	
 	@Override
-	public int listSearchCount(SearchCriteria cri) throws Exception{
-		return session.selectOne(namespace + ".listSearchCount", cri);
+	public int listSearchCount(SearchCriteria cri)throws Exception{
+		return session.selectOne(namespace+ ".listSearchCount",cri);
 	}
+	
 }

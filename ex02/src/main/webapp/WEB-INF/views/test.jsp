@@ -30,8 +30,8 @@
 
 </head>
 <script type="text/javascript">
-	var bno = 12;
-	var replyPage=1;
+	var bno = 1509;
+	
 	getPageList(1);
 	
 	//댓글 불러오는 함수
@@ -53,6 +53,8 @@
 	}
 	//page 만드는 함수
 	 function getPageList(page){
+		
+		 
 		
 		$.getJSON("/replies/"+bno+"/"+page, function(data){
 			
@@ -178,12 +180,14 @@
 					if(result == 'SUCCESS'){
 						alert("수정되었습니다.");
 						$("#modDiv").hide("slow");
-						getAllList();
+						//getAllList();
 						getPageList(replyPage);
 					}
 				}
 			});
 		});
+		var replyPage=1;
+		
 		$(".pagination").on("click","li a", function(event){
 			event.preventDefault();
 			replyPage=$(this).attr("href");
@@ -196,11 +200,6 @@
 <body>
 
 	<h2>Ajax Test Page</h2>
-
-
-	
-
-
 
 	<div>
 		<div>

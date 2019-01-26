@@ -5,7 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <title>Insert title here</title>
+<script type="text/javascript">
+console.log("왜");
+</script>
 </head>
 <body>
 	<h4>${exeception.getMessage() }</h4>
