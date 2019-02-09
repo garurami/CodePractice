@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ahn.domain.BoardVO;
 import com.ahn.domain.PageMaker;
 import com.ahn.domain.SearchCriteria;
+import com.ahn.persistence.BoardDAO;
 import com.ahn.service.BoardService;
 
 @Controller
@@ -31,6 +32,7 @@ public class SearchBoardController {
 		
 		logger.info(cri.toString());
 		
+		
 		//model.addAttribute("list", service.listCriteria(cri));
 		model.addAttribute("list", service.listSearchCriteria(cri));
 		
@@ -46,6 +48,7 @@ public class SearchBoardController {
 	@RequestMapping(value="/readPage", method = RequestMethod.GET)
 	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") SearchCriteria cri, Model model)throws Exception{
 		model.addAttribute(service.read(bno));
+		
 	}
 	
 	@RequestMapping(value="/removePage", method = RequestMethod.POST)
